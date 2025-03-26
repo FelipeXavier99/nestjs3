@@ -1,7 +1,9 @@
 export class Product {
     id?: string;
-    name: string;
-    description: string;
-    price: number;
-    quantity: number;
+    nome?: string; 
+    descricao?: string;
+    preco: number;
+    quantidade: number;
   }
+
+
