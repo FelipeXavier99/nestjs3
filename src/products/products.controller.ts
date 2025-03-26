@@ -28,8 +28,9 @@ export class ProductsController {
     return this.productsService.update(id, updateProductDto);
   }
 
-  @Delete(':id')
-  delete(@Param('id') id: string): boolean {
-    return this.productsService.delete(id);
-  }
+
+@Delete(':id')
+delete(@Param('id') id: string): { message: string } { // Atualize o tipo de retorno
+  return this.productsService.delete(id);
+}
 }
