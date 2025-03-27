@@ -33,7 +33,7 @@ $ npm run start:dev
 
 - estou usando windows aí o teste curl seria assim abaixo:
 
-- PRA INSERIR PRODUTO:(terminal)
+-PRA INSERIR PRODUTO:(terminal)
 ```bash
 iwr -Uri "http://localhost:3003/products" `
 -Method POST `
@@ -41,7 +41,35 @@ iwr -Uri "http://localhost:3003/products" `
 -Body '{"nome":"Produto Teste2", "descricao":"Descrição atualizada", "preco":200, "quantidade":10}'
 ```
 
-- Buscar Produto por ID:(navegador)
+### Buscar Produto por ID:(navegador)
 ```bash
 GET http://localhost:3003/products/j4ko00h11
 ```
+
+-PRA LISTAR PRODUTOS:(navegador)
+```bash
+http://localhost:3003/products
+```
+
+-EXCLUIR(terminal)
+```bash
+iwr "http://localhost:3003/products/j4ko00h11" -Method DELETE
+```
+
+-ATUALIZAR
+```bash
+iwr -Uri " http://localhost:3003/products/f9jb5ac1d" `
+-Method PUT `
+-Headers @{"Content-Type"="application/json"} `
+-Body '{"nome": "Notebook Premium", "preco": 6500, "quantidade": 8}'
+```
+
+- Deixei armazenado via array ms sei fazer também no postgresql
+
+- DTO (Data Transfer Object) de Criação
+ npm install @nestjs/mapped-types
+ criado \src\products\dto\create-product.dto.ts e src\products\dto\update-product.dto.ts
+
+- deixando as variaveis nome e descrição em opcional *src\products\entities\product.entity.ts
+
+- implemntando tratamento de erro pra cirar e editar produto em: *src\products\products.service.ts
