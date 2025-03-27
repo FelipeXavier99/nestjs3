@@ -31,7 +31,7 @@ $ npm run start:dev
 
 - Estou rodando localmente nessa porta pq a 3000 está em outro projeto: http://localhost:3003/
 
-- estou usando windows aí o teste curl seria assim abaixo:
+### estou usando windows aí o teste curl seria assim abaixo:
 
 -PRA INSERIR PRODUTO:(terminal)
 ```bash
@@ -41,7 +41,7 @@ iwr -Uri "http://localhost:3003/products" `
 -Body '{"nome":"Produto Teste2", "descricao":"Descrição atualizada", "preco":200, "quantidade":10}'
 ```
 
-### Buscar Produto por ID:(navegador)
+ -Buscar Produto por ID:(navegador)
 ```bash
 GET http://localhost:3003/products/j4ko00h11
 ```
