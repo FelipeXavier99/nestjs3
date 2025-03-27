@@ -8,37 +8,46 @@ import {
 import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
 import { Product } from './entities/product.entity';
+import { AIService } from  '../ia/ai.service'; // Importe o serviço de IA
 
 @Injectable()
 export class ProductsService {
   private products: Product[] = [];
 
-  // CREATE
-  create(createProductDto: CreateProductDto): Product {
+  constructor(private readonly aiService: AIService) {} // Injeção do serviço de IA
+
+  // CREATE (agora assíncrono)
+  async create(createProductDto: CreateProductDto): Promise<Product> {
     try {
       if (!createProductDto.nome) {
         throw new BadRequestException('Nome do produto é obrigatório');
       }
 
+      // Gera descrição com IA (ou mock)
+      const descricao = await this.aiService.generateProductDescription(createProductDto.nome);
+
       const newProduct: Product = {
         id: this.generateId(),
         ...createProductDto,
-        descricao: createProductDto.descricao || 'Sem descrição',
+        descricao: descricao || 'Sem descrição', // Usa a descrição gerada
       };
 
       this.products.push(newProduct);
       return newProduct;
     } catch (error) {
+      if (error instanceof BadRequestException) {
+        throw error;
+      }
       throw new InternalServerErrorException('Falha ao criar produto');
     }
   }
 
-  // READ (ALL)
+  // READ (ALL) - Mantido igual
   findAll(): Product[] {
     return this.products;
   }
 
-  // READ (ONE)
+  // READ (ONE) - Mantido igual
   findOne(id: string): Product {
     const product = this.products.find(p => p.id === id);
     
@@ -49,7 +58,7 @@ export class ProductsService {
     return product;
   }
 
-  // UPDATE
+  // UPDATE - Mantido igual
   update(id: string, updateProductDto: UpdateProductDto): Product {
     try {
       const index = this.products.findIndex(p => p.id === id);
@@ -65,7 +74,7 @@ export class ProductsService {
       const updatedProduct = {
         ...this.products[index],
         ...updateProductDto,
-        id // Garante que o ID não seja alterado
+        id
       };
 
       this.products[index] = updatedProduct;
@@ -78,7 +87,7 @@ export class ProductsService {
     }
   }
 
-  // DELETE
+  // DELETE - Mantido igual
   delete(id: string): { message: string } {
     const initialLength = this.products.length;
     this.products = this.products.filter(p => p.id !== id);
@@ -90,7 +99,7 @@ export class ProductsService {
     return { message: 'Produto deletado com sucesso' };
   }
 
-  // GERADOR DE ID
+  // GERADOR DE ID - Mantido igual
   private generateId(): string {
     return Math.random().toString(36).substr(2, 9);
   }

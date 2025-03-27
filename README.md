@@ -73,3 +73,12 @@ iwr -Uri " http://localhost:3003/products/f9jb5ac1d" `
 - deixando as variaveis nome e descrição em opcional *src\products\entities\product.entity.ts
 
 - implemntando tratamento de erro pra cirar e editar produto em: *src\products\products.service.ts
+
+- Passoa pra USAR IA:
+ -npm install openai
+```bash
+ iwr -Uri "http://localhost:3003/products" `
+-Method POST `
+-Headers @{"Content-Type"="application/json"} `
+-Body '{"nome":"Produto Teste 2", "preco":100, "quantidade":5}'
+```
